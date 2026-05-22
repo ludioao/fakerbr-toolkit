@@ -26,7 +26,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -75,6 +76,16 @@ h2 {
   font-weight: 700;
 }
 
+.header-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.compact-field {
+  min-width: 112px;
+}
+
 .panel {
   display: flex;
   flex-direction: column;
@@ -84,6 +95,10 @@ h2 {
   background: var(--panel);
   padding: 12px;
   box-shadow: var(--shadow);
+}
+
+.compact-panel {
+  padding: 10px 12px;
 }
 
 .section-title,
@@ -109,7 +124,8 @@ label {
   font-weight: 650;
 }
 
-input {
+input,
+select {
   width: 100%;
   min-height: 36px;
   border: 1px solid var(--line);
@@ -120,7 +136,17 @@ input {
   outline: none;
 }
 
-input:focus {
+select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 15px, calc(100% - 10px) 15px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 28px;
+}
+
+input:focus,
+select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
 }

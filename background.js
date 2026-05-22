@@ -6,10 +6,22 @@ const firstNames = [
   "Henrique", "Lucas", "Marcelo", "Thiago"
 ];
 
+const usFirstNames = [
+  "Ava", "Charlotte", "Emma", "Harper", "Mia", "Olivia", "Sophia", "Amelia",
+  "Benjamin", "Carter", "Elijah", "Ethan", "Henry", "James", "Liam", "Lucas",
+  "Mason", "Noah", "Oliver", "William"
+];
+
 const lastNames = [
   "Almeida", "Barbosa", "Cardoso", "Carvalho", "Costa", "Fernandes", "Ferreira",
   "Gomes", "Lima", "Martins", "Mendes", "Oliveira", "Pereira", "Ribeiro",
   "Rocha", "Rodrigues", "Santana", "Santos", "Silva", "Souza"
+];
+
+const usLastNames = [
+  "Anderson", "Brown", "Clark", "Davis", "Garcia", "Hall", "Johnson", "Jones",
+  "Lewis", "Martin", "Miller", "Moore", "Robinson", "Smith", "Taylor", "Thomas",
+  "Walker", "White", "Williams", "Wilson"
 ];
 
 const companySegments = [
@@ -17,10 +29,61 @@ const companySegments = [
   "Engenharia", "Saude", "Educacao", "Transportes"
 ];
 
+const usCompanySegments = [
+  "Analytics", "Consulting", "Design", "Digital", "Foods", "Health", "Holdings",
+  "Labs", "Logistics", "Media", "Retail", "Solutions", "Systems", "Ventures"
+];
+
 const companySuffixes = ["Ltda", "S.A.", "ME", "Eireli"];
+const usCompanySuffixes = ["LLC", "Inc.", "Co.", "Group"];
+
+const usZipSamples = [
+  "10001", "11201", "20001", "30301", "33101", "60601", "73301", "80202",
+  "90001", "94105", "98101", "02108", "85001", "97201", "15201"
+];
+
+const SETTINGS_STORAGE_KEY = "fakerBrSettings";
+
+const contextMenuTranslations = {
+  "pt-BR": {
+    fillPerson: "Preencher pessoa fake",
+    fillCompany: "Preencher empresa fake",
+    fillCpf: "Preencher este campo com CPF",
+    fillCnpj: "Preencher este campo com CNPJ",
+    fillZip: "Preencher este campo com ZIP Code",
+    fillEmail: "Preencher este campo com email temporario",
+    lookupCnpj: "Consultar CNPJ selecionado e preencher",
+    lookupCep: "Consultar CEP selecionado e preencher endereco"
+  },
+  en: {
+    fillPerson: "Fill fake person",
+    fillCompany: "Fill fake company",
+    fillCpf: "Fill this field with CPF",
+    fillCnpj: "Fill this field with CNPJ",
+    fillZip: "Fill this field with ZIP Code",
+    fillEmail: "Fill this field with temporary email",
+    lookupCnpj: "Look up selected CNPJ and fill",
+    lookupCep: "Look up selected CEP and fill address"
+  },
+  es: {
+    fillPerson: "Rellenar persona fake",
+    fillCompany: "Rellenar empresa fake",
+    fillCpf: "Rellenar este campo con CPF",
+    fillCnpj: "Rellenar este campo con CNPJ",
+    fillZip: "Rellenar este campo con ZIP Code",
+    fillEmail: "Rellenar este campo con email temporal",
+    lookupCnpj: "Consultar CNPJ seleccionado y rellenar",
+    lookupCep: "Consultar CEP seleccionado y rellenar direccion"
+  }
+};
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
 chrome.runtime.onStartup.addListener(createContextMenus);
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === "local" && changes[SETTINGS_STORAGE_KEY]) {
+    createContextMenus();
+  }
+});
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (!tab?.id) {
@@ -29,12 +92,12 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
   try {
     if (info.menuItemId === "faker-fill-person") {
-      await fillActiveTab(tab.id, "FILL_PERSON", createPersonPayload());
+      await fillActiveTab(tab.id, "FILL_PERSON", await createPersonPayload());
       return;
     }
 
     if (info.menuItemId === "faker-fill-company") {
-      await fillActiveTab(tab.id, "FILL_COMPANY", createCompanyPayload());
+      await fillActiveTab(tab.id, "FILL_COMPANY", await createCompanyPayload());
       return;
     }
 
@@ -45,6 +108,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
     if (info.menuItemId === "faker-fill-field-cnpj") {
       await fillActiveTab(tab.id, "FILL_CONTEXT_FIELD", { value: formatCnpj(createCnpj()) });
+      return;
+    }
+
+    if (info.menuItemId === "faker-fill-field-zip") {
+      await fillActiveTab(tab.id, "FILL_CONTEXT_FIELD", { value: createUsZip() });
       return;
     }
 
@@ -79,7 +147,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-function createContextMenus() {
+async function createContextMenus() {
+  const settings = await getSettings();
+  const copy = contextMenuTranslations[settings.language] || contextMenuTranslations["pt-BR"];
+
   chrome.contextMenus.removeAll(() => {
     chrome.contextMenus.create({
       id: "faker-root",
@@ -90,52 +161,69 @@ function createContextMenus() {
     chrome.contextMenus.create({
       id: "faker-fill-person",
       parentId: "faker-root",
-      title: "Preencher pessoa fake",
+      title: copy.fillPerson,
       contexts: ["page", "editable"]
     });
 
     chrome.contextMenus.create({
       id: "faker-fill-company",
       parentId: "faker-root",
-      title: "Preencher empresa fake",
+      title: copy.fillCompany,
       contexts: ["page", "editable"]
     });
 
     chrome.contextMenus.create({
       id: "faker-fill-field-cpf",
       parentId: "faker-root",
-      title: "Preencher este campo com CPF",
+      title: copy.fillCpf,
       contexts: ["editable"]
     });
 
     chrome.contextMenus.create({
       id: "faker-fill-field-cnpj",
       parentId: "faker-root",
-      title: "Preencher este campo com CNPJ",
+      title: copy.fillCnpj,
+      contexts: ["editable"]
+    });
+
+    chrome.contextMenus.create({
+      id: "faker-fill-field-zip",
+      parentId: "faker-root",
+      title: copy.fillZip,
       contexts: ["editable"]
     });
 
     chrome.contextMenus.create({
       id: "faker-fill-field-email",
       parentId: "faker-root",
-      title: "Preencher este campo com email temporario",
+      title: copy.fillEmail,
       contexts: ["editable"]
     });
 
     chrome.contextMenus.create({
       id: "faker-lookup-cnpj",
       parentId: "faker-root",
-      title: "Consultar CNPJ selecionado e preencher",
+      title: copy.lookupCnpj,
       contexts: ["selection"]
     });
 
     chrome.contextMenus.create({
       id: "faker-lookup-cep",
       parentId: "faker-root",
-      title: "Consultar CEP selecionado e preencher endereço",
+      title: copy.lookupCep,
       contexts: ["selection"]
     });
   });
+}
+
+async function getSettings() {
+  const stored = await chrome.storage.local.get(SETTINGS_STORAGE_KEY).catch(() => ({}));
+  const settings = stored[SETTINGS_STORAGE_KEY] || {};
+
+  return {
+    language: contextMenuTranslations[settings.language] ? settings.language : "pt-BR",
+    dataLocale: settings.dataLocale === "US" ? "US" : "BR"
+  };
 }
 
 async function fillActiveTab(tabId, type, payload) {
@@ -148,9 +236,12 @@ async function fillActiveTab(tabId, type, payload) {
   return response;
 }
 
-function createPersonPayload() {
-  const firstName = randomItem(firstNames);
-  const lastName = `${randomItem(lastNames)} ${randomItem(lastNames)}`;
+async function createPersonPayload() {
+  const settings = await getSettings();
+  const firstName = randomItem(settings.dataLocale === "US" ? usFirstNames : firstNames);
+  const lastName = settings.dataLocale === "US"
+    ? randomItem(usLastNames)
+    : `${randomItem(lastNames)} ${randomItem(lastNames)}`;
 
   return {
     firstName,
@@ -160,8 +251,11 @@ function createPersonPayload() {
   };
 }
 
-function createCompanyPayload() {
-  const companyName = `${randomItem(lastNames)} ${randomItem(companySegments)} ${randomItem(companySuffixes)}`;
+async function createCompanyPayload() {
+  const settings = await getSettings();
+  const companyName = settings.dataLocale === "US"
+    ? `${randomItem(usLastNames)} ${randomItem(usCompanySegments)} ${randomItem(usCompanySuffixes)}`
+    : `${randomItem(lastNames)} ${randomItem(companySegments)} ${randomItem(companySuffixes)}`;
 
   return {
     cnpj: formatCnpj(createCnpj()),
@@ -232,6 +326,14 @@ function createCnpjDigit(digits, weights) {
   const sum = digits.reduce((total, digit, index) => total + digit * weights[index], 0);
   const rest = sum % 11;
   return rest < 2 ? 0 : 11 - rest;
+}
+
+function createUsZip() {
+  if (Math.random() > 0.2) {
+    return randomItem(usZipSamples);
+  }
+
+  return `${randomItem(usZipSamples)}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`;
 }
 
 function normalizeBrasilApiCompany(data) {

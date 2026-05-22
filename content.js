@@ -11,19 +11,23 @@ const fieldMatchers = {
   firstName: [
     /\bprimeiro.?nome\b/i,
     /\bnome.?inicial\b/i,
-    /\bfirst.?name\b/i
+    /\bfirst.?name\b/i,
+    /\bnombre\b/i
   ],
   lastName: [
     /\bsobrenome\b/i,
     /\bultimo.?nome\b/i,
-    /\blast.?name\b/i
+    /\blast.?name\b/i,
+    /\bapellido\b/i
   ],
   fullName: [
     /^nome$/i,
     /\bnome.?completo\b/i,
     /\bfull.?name\b/i,
+    /\bnombre.?completo\b/i,
     /\bcontato\b/i,
-    /\bresponsavel\b/i
+    /\bresponsavel\b/i,
+    /\bresponsable\b/i
   ],
   cpf: [
     /\bcpf\b/i,
@@ -36,6 +40,7 @@ const fieldMatchers = {
   companyName: [
     /\bempresa\b/i,
     /\bnome.?empresa\b/i,
+    /\bnombre.?empresa\b/i,
     /\bnome.?fantasia\b/i,
     /\bfantasia\b/i,
     /\bcompany\b/i
@@ -43,7 +48,8 @@ const fieldMatchers = {
   legalName: [
     /\brazao.?social\b/i,
     /\brazão.?social\b/i,
-    /\blegal.?name\b/i
+    /\blegal.?name\b/i,
+    /\brazon.?social\b/i
   ],
   tradeName: [
     /\bnome.?fantasia\b/i,
@@ -57,17 +63,23 @@ const fieldMatchers = {
   phone: [
     /\btelefone\b/i,
     /\bcelular\b/i,
-    /\bphone\b/i
+    /\bphone\b/i,
+    /\btelefono\b/i,
+    /\bteléfono\b/i
   ],
   cep: [
     /\bcep\b/i,
     /\bpostal.?code\b/i,
-    /\bzip\b/i
+    /\bzip\b/i,
+    /\bcodigo.?postal\b/i,
+    /\bcódigo.?postal\b/i
   ],
   street: [
     /\blogradouro\b/i,
     /\bendereco\b/i,
     /\bendereço\b/i,
+    /\bdireccion\b/i,
+    /\bdirección\b/i,
     /\brua\b/i,
     /\bstreet\b/i,
     /\baddress\b/i
@@ -77,6 +89,8 @@ const fieldMatchers = {
     /^número$/i,
     /\bnumero.?endereco\b/i,
     /\bnúmero.?endereço\b/i,
+    /\bnumero.?direccion\b/i,
+    /\bnúmero.?dirección\b/i,
     /\bnumber\b/i
   ],
   complement: [
@@ -86,18 +100,21 @@ const fieldMatchers = {
   neighborhood: [
     /\bbairro\b/i,
     /\bneighborhood\b/i,
-    /\bdistrict\b/i
+    /\bdistrict\b/i,
+    /\bbarrio\b/i
   ],
   city: [
     /\bcidade\b/i,
     /\bmunicipio\b/i,
     /\bmunicípio\b/i,
-    /\bcity\b/i
+    /\bcity\b/i,
+    /\bciudad\b/i
   ],
   state: [
     /^uf$/i,
     /\bestado\b/i,
-    /\bstate\b/i
+    /\bstate\b/i,
+    /\bprovincia\b/i
   ],
   ibge: [
     /\bibge\b/i

@@ -11,102 +11,122 @@
       <header class="header">
         <div>
           <h1>Faker BR</h1>
-          <p>Dados brasileiros para testes rápidos.</p>
+          <p data-i18n="tagline">Dados brasileiros para testes rápidos.</p>
         </div>
-        <span class="badge">MV3</span>
+        <div class="header-controls">
+          <label class="compact-field">
+            <span data-i18n="languageLabel">Idioma</span>
+            <select id="language">
+              <option value="pt-BR">Português</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </label>
+          <span class="badge">MV3</span>
+        </div>
       </header>
+
+      <section class="panel compact-panel">
+        <label>
+          <span data-i18n="dataLocaleLabel">Dados</span>
+          <select id="dataLocale">
+            <option value="BR" data-i18n="brazilData">Brasil</option>
+            <option value="US" data-i18n="usData">Estados Unidos</option>
+          </select>
+        </label>
+      </section>
 
       <section class="panel">
         <div class="section-title">
-          <h2>Pessoa</h2>
-          <button id="generatePerson" class="icon-button" type="button" title="Gerar pessoa">↻</button>
+          <h2 data-i18n="personTitle">Pessoa</h2>
+          <button id="generatePerson" class="icon-button" type="button" title="Gerar pessoa" data-i18n-title="generatePersonTitle">↻</button>
         </div>
 
         <div class="grid">
           <label>
-            Nome
+            <span data-i18n="firstNameLabel">Nome</span>
             <input id="firstName" type="text" autocomplete="off">
           </label>
           <label>
-            Sobrenome
+            <span data-i18n="lastNameLabel">Sobrenome</span>
             <input id="lastName" type="text" autocomplete="off">
           </label>
         </div>
 
         <label>
-          Nome completo
+          <span data-i18n="fullNameLabel">Nome completo</span>
           <input id="fullName" type="text" autocomplete="off">
         </label>
 
         <label>
-          CPF
+          <span data-i18n="cpfLabel">CPF</span>
           <input id="cpf" type="text" autocomplete="off">
         </label>
 
         <div class="actions">
-          <button id="copyPerson" class="secondary" type="button">Copiar</button>
-          <button id="fillPerson" type="button">Preencher página</button>
+          <button id="copyPerson" class="secondary" type="button" data-i18n="copyButton">Copiar</button>
+          <button id="fillPerson" type="button" data-i18n="fillPageButton">Preencher página</button>
         </div>
       </section>
 
       <section class="panel">
         <div class="section-title">
-          <h2>Email temporário</h2>
-          <button id="refreshInbox" class="icon-button" type="button" title="Atualizar inbox">↻</button>
+          <h2 data-i18n="tempEmailTitle">Email temporário</h2>
+          <button id="refreshInbox" class="icon-button" type="button" title="Atualizar inbox" data-i18n-title="refreshInboxTitle">↻</button>
         </div>
 
         <label>
-          Email
-          <input id="tempEmail" type="email" autocomplete="off" readonly placeholder="Gere uma caixa Mail.tm">
+          <span data-i18n="emailLabel">Email</span>
+          <input id="tempEmail" type="email" autocomplete="off" readonly placeholder="Gere uma caixa Mail.tm" data-i18n-placeholder="tempEmailPlaceholder">
         </label>
 
         <div class="actions">
-          <button id="copyTempEmail" class="secondary" type="button">Copiar</button>
-          <button id="fillTempEmail" type="button">Preencher página</button>
+          <button id="copyTempEmail" class="secondary" type="button" data-i18n="copyButton">Copiar</button>
+          <button id="fillTempEmail" type="button" data-i18n="fillPageButton">Preencher página</button>
         </div>
 
-        <button id="generateTempEmail" type="button">Gerar email temporário</button>
+        <button id="generateTempEmail" type="button" data-i18n="generateTempEmailButton">Gerar email temporário</button>
 
         <div class="inbox">
           <div class="inbox-header">
             <span>Inbox</span>
             <a href="https://mail.tm" target="_blank" rel="noreferrer">Mail.tm</a>
           </div>
-          <div id="inboxList" class="inbox-list">Nenhum email temporário ativo.</div>
+          <div id="inboxList" class="inbox-list" data-i18n="noTempEmailActive">Nenhum email temporário ativo.</div>
         </div>
       </section>
 
       <section class="panel">
         <div class="section-title">
-          <h2>Empresa fake</h2>
-          <button id="generateCompany" class="icon-button" type="button" title="Gerar empresa">↻</button>
+          <h2 data-i18n="companyTitle">Empresa fake</h2>
+          <button id="generateCompany" class="icon-button" type="button" title="Gerar empresa" data-i18n-title="generateCompanyTitle">↻</button>
         </div>
 
         <label>
-          Nome da empresa
+          <span data-i18n="companyNameLabel">Nome da empresa</span>
           <input id="companyName" type="text" autocomplete="off">
         </label>
 
         <label>
-          CNPJ
+          <span data-i18n="cnpjLabel">CNPJ</span>
           <input id="cnpj" type="text" autocomplete="off">
         </label>
 
         <div class="actions">
-          <button id="copyCompany" class="secondary" type="button">Copiar</button>
-          <button id="fillCompany" type="button">Preencher página</button>
+          <button id="copyCompany" class="secondary" type="button" data-i18n="copyButton">Copiar</button>
+          <button id="fillCompany" type="button" data-i18n="fillPageButton">Preencher página</button>
         </div>
       </section>
 
       <section class="panel">
         <h2>BrasilAPI CNPJ</h2>
         <label>
-          CNPJ para consulta
+          <span data-i18n="cnpjLookupLabel">CNPJ para consulta</span>
           <input id="lookupCnpj" type="text" inputmode="numeric" placeholder="65347806000104" autocomplete="off">
         </label>
         <div class="actions">
-          <button id="useExampleCnpj" class="secondary" type="button">Usar exemplo</button>
-          <button id="fetchCnpj" type="button">Buscar e preencher</button>
+          <button id="useExampleCnpj" class="secondary" type="button" data-i18n="useExampleButton">Usar exemplo</button>
+          <button id="fetchCnpj" type="button" data-i18n="fetchAndFillButton">Buscar e preencher</button>
         </div>
         <output id="cnpjResult" class="result"></output>
       </section>
@@ -114,20 +134,32 @@
       <section class="panel">
         <h2>ViaCEP</h2>
         <label>
-          CEP válido
+          <span data-i18n="cepLabel">CEP válido</span>
           <input id="cep" type="text" inputmode="numeric" placeholder="01001000" autocomplete="off">
         </label>
         <div class="actions">
-          <button id="generateCep" class="secondary" type="button">Gerar CEP</button>
-          <button id="fetchCep" type="button">Buscar e preencher</button>
+          <button id="generateCep" class="secondary" type="button" data-i18n="generateCepButton">Gerar CEP</button>
+          <button id="fetchCep" type="button" data-i18n="fetchAndFillButton">Buscar e preencher</button>
         </div>
         <output id="cepResult" class="result"></output>
+      </section>
+
+      <section class="panel">
+        <h2 data-i18n="usToolsTitle">Estados Unidos</h2>
+        <label>
+          <span data-i18n="zipLabel">ZIP Code</span>
+          <input id="usZip" type="text" inputmode="numeric" placeholder="10001" autocomplete="off">
+        </label>
+        <div class="actions">
+          <button id="generateUsZip" class="secondary" type="button" data-i18n="generateZipButton">Gerar ZIP</button>
+          <button id="fillUsZip" type="button" data-i18n="fillPageButton">Preencher página</button>
+        </div>
       </section>
 
       <p id="status" class="status" role="status" aria-live="polite"></p>
 
       <footer class="footer">
-        Criado por <strong>Lúdio Oliveira</strong>
+        <span data-i18n="createdBy">Criado por</span> <strong>Lúdio Oliveira</strong>
         <a href="https://github.com/ludioao" target="_blank" rel="noreferrer">github.com/ludioao</a>
       </footer>
     </main>

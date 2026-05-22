@@ -1,0 +1,8 @@
+{
+  "extensionName": {
+    "message": "Faker BR"
+  },
+  "extensionDescription": {
+    "message": "Generate CPF, CNPJ, names, companies, temporary email, US ZIP Codes, and fill forms with test data."
+  }
+}

@@ -4,10 +4,22 @@ const firstNames = [
   "Henrique", "Lucas", "Marcelo", "Thiago"
 ];
 
+const usFirstNames = [
+  "Ava", "Charlotte", "Emma", "Harper", "Mia", "Olivia", "Sophia", "Amelia",
+  "Benjamin", "Carter", "Elijah", "Ethan", "Henry", "James", "Liam", "Lucas",
+  "Mason", "Noah", "Oliver", "William"
+];
+
 const lastNames = [
   "Almeida", "Barbosa", "Cardoso", "Carvalho", "Costa", "Fernandes", "Ferreira",
   "Gomes", "Lima", "Martins", "Mendes", "Oliveira", "Pereira", "Ribeiro",
   "Rocha", "Rodrigues", "Santana", "Santos", "Silva", "Souza"
+];
+
+const usLastNames = [
+  "Anderson", "Brown", "Clark", "Davis", "Garcia", "Hall", "Johnson", "Jones",
+  "Lewis", "Martin", "Miller", "Moore", "Robinson", "Smith", "Taylor", "Thomas",
+  "Walker", "White", "Williams", "Wilson"
 ];
 
 const companySegments = [
@@ -15,14 +27,240 @@ const companySegments = [
   "Engenharia", "Saude", "Educacao", "Transportes"
 ];
 
+const usCompanySegments = [
+  "Analytics", "Consulting", "Design", "Digital", "Foods", "Health", "Holdings",
+  "Labs", "Logistics", "Media", "Retail", "Solutions", "Systems", "Ventures"
+];
+
 const companySuffixes = ["Ltda", "S.A.", "ME", "Eireli"];
+const usCompanySuffixes = ["LLC", "Inc.", "Co.", "Group"];
 
 const validCepSamples = [
   "01001000", "20040002", "30140071", "40010000", "70040900",
   "80010000", "88010000", "59010000", "66010000", "79002000"
 ];
 
+const usZipSamples = [
+  "10001", "11201", "20001", "30301", "33101", "60601", "73301", "80202",
+  "90001", "94105", "98101", "02108", "85001", "97201", "15201"
+];
+
+const SETTINGS_STORAGE_KEY = "fakerBrSettings";
+
+const translations = {
+  "pt-BR": {
+    tagline: "Dados brasileiros e internacionais para testes rápidos.",
+    languageLabel: "Idioma",
+    dataLocaleLabel: "Dados",
+    brazilData: "Brasil",
+    usData: "Estados Unidos",
+    personTitle: "Pessoa",
+    generatePersonTitle: "Gerar pessoa",
+    firstNameLabel: "Nome",
+    lastNameLabel: "Sobrenome",
+    fullNameLabel: "Nome completo",
+    cpfLabel: "CPF",
+    copyButton: "Copiar",
+    fillPageButton: "Preencher página",
+    tempEmailTitle: "Email temporário",
+    refreshInboxTitle: "Atualizar inbox",
+    emailLabel: "Email",
+    tempEmailPlaceholder: "Gere uma caixa Mail.tm",
+    generateTempEmailButton: "Gerar email temporário",
+    noTempEmailActive: "Nenhum email temporário ativo.",
+    companyTitle: "Empresa fake",
+    generateCompanyTitle: "Gerar empresa",
+    companyNameLabel: "Nome da empresa",
+    cnpjLabel: "CNPJ",
+    cnpjLookupLabel: "CNPJ para consulta",
+    useExampleButton: "Usar exemplo",
+    fetchAndFillButton: "Buscar e preencher",
+    cepLabel: "CEP válido",
+    generateCepButton: "Gerar CEP",
+    usToolsTitle: "Estados Unidos",
+    zipLabel: "ZIP Code",
+    generateZipButton: "Gerar ZIP",
+    createdBy: "Criado por",
+    personGenerated: "Pessoa gerada.",
+    companyGenerated: "Empresa fake gerada.",
+    cepGenerated: "CEP válido carregado.",
+    zipGenerated: "ZIP Code gerado.",
+    copied: "Copiado para a área de transferência.",
+    tempEmailCreating: "Criando email temporário no Mail.tm...",
+    tempEmailCreated: "Email temporário criado.",
+    tempEmailCreateError: "Não foi possível criar email temporário.",
+    tempEmailRequired: "Gere um email temporário primeiro.",
+    tempEmailLoadError: "Não foi possível carregar o email salvo.",
+    inboxUpdating: "Atualizando inbox...",
+    inboxUpdated: "{count} mensagem(ns) encontrada(s).",
+    inboxUpdateError: "Não foi possível atualizar a inbox.",
+    noMessages: "Nenhuma mensagem recebida ainda.",
+    noSubject: "(sem assunto)",
+    unknownSender: "remetente desconhecido",
+    exampleCnpjLoaded: "CNPJ de exemplo carregado para consulta.",
+    cnpjInvalid: "Informe um CNPJ com 14 dígitos.",
+    brasilApiLoading: "Consultando BrasilAPI...",
+    cnpjFilled: "CNPJ consultado e enviado para a página.",
+    cnpjError: "Não foi possível consultar o CNPJ.",
+    cepInvalid: "Informe um CEP com 8 dígitos.",
+    viaCepLoading: "Consultando ViaCEP...",
+    cepNotFound: "CEP não encontrado no ViaCEP.",
+    addressFilled: "Endereço consultado e enviado para a página.",
+    cepError: "Não foi possível consultar o CEP.",
+    noActiveTab: "Nenhuma aba ativa encontrada.",
+    fieldsFilled: "{count} campo(s) preenchido(s).",
+    noCompatibleFields: "Nenhum campo compatível foi encontrado na página.",
+    reloadPage: "Recarregue a página atual e tente preencher novamente.",
+    nameCopyLabel: "Nome",
+    cpfCopyLabel: "CPF",
+    companyCopyLabel: "Empresa",
+    cnpjCopyLabel: "CNPJ"
+  },
+  en: {
+    tagline: "Brazilian and international test data, fast.",
+    languageLabel: "Language",
+    dataLocaleLabel: "Data",
+    brazilData: "Brazil",
+    usData: "United States",
+    personTitle: "Person",
+    generatePersonTitle: "Generate person",
+    firstNameLabel: "First name",
+    lastNameLabel: "Last name",
+    fullNameLabel: "Full name",
+    cpfLabel: "CPF",
+    copyButton: "Copy",
+    fillPageButton: "Fill page",
+    tempEmailTitle: "Temporary email",
+    refreshInboxTitle: "Refresh inbox",
+    emailLabel: "Email",
+    tempEmailPlaceholder: "Generate a Mail.tm inbox",
+    generateTempEmailButton: "Generate temporary email",
+    noTempEmailActive: "No active temporary email.",
+    companyTitle: "Fake company",
+    generateCompanyTitle: "Generate company",
+    companyNameLabel: "Company name",
+    cnpjLabel: "CNPJ",
+    cnpjLookupLabel: "CNPJ lookup",
+    useExampleButton: "Use example",
+    fetchAndFillButton: "Fetch and fill",
+    cepLabel: "Valid CEP",
+    generateCepButton: "Generate CEP",
+    usToolsTitle: "United States",
+    zipLabel: "ZIP Code",
+    generateZipButton: "Generate ZIP",
+    createdBy: "Created by",
+    personGenerated: "Person generated.",
+    companyGenerated: "Fake company generated.",
+    cepGenerated: "Valid CEP loaded.",
+    zipGenerated: "ZIP Code generated.",
+    copied: "Copied to clipboard.",
+    tempEmailCreating: "Creating temporary email on Mail.tm...",
+    tempEmailCreated: "Temporary email created.",
+    tempEmailCreateError: "Could not create temporary email.",
+    tempEmailRequired: "Generate a temporary email first.",
+    tempEmailLoadError: "Could not load saved email.",
+    inboxUpdating: "Refreshing inbox...",
+    inboxUpdated: "{count} message(s) found.",
+    inboxUpdateError: "Could not refresh inbox.",
+    noMessages: "No messages received yet.",
+    noSubject: "(no subject)",
+    unknownSender: "unknown sender",
+    exampleCnpjLoaded: "Example CNPJ loaded.",
+    cnpjInvalid: "Enter a CNPJ with 14 digits.",
+    brasilApiLoading: "Checking BrasilAPI...",
+    cnpjFilled: "CNPJ fetched and sent to the page.",
+    cnpjError: "Could not fetch CNPJ.",
+    cepInvalid: "Enter a CEP with 8 digits.",
+    viaCepLoading: "Checking ViaCEP...",
+    cepNotFound: "CEP was not found in ViaCEP.",
+    addressFilled: "Address fetched and sent to the page.",
+    cepError: "Could not fetch CEP.",
+    noActiveTab: "No active tab found.",
+    fieldsFilled: "{count} field(s) filled.",
+    noCompatibleFields: "No compatible field was found on the page.",
+    reloadPage: "Reload the current page and try again.",
+    nameCopyLabel: "Name",
+    cpfCopyLabel: "CPF",
+    companyCopyLabel: "Company",
+    cnpjCopyLabel: "CNPJ"
+  },
+  es: {
+    tagline: "Datos brasileños e internacionales para pruebas rápidas.",
+    languageLabel: "Idioma",
+    dataLocaleLabel: "Datos",
+    brazilData: "Brasil",
+    usData: "Estados Unidos",
+    personTitle: "Persona",
+    generatePersonTitle: "Generar persona",
+    firstNameLabel: "Nombre",
+    lastNameLabel: "Apellido",
+    fullNameLabel: "Nombre completo",
+    cpfLabel: "CPF",
+    copyButton: "Copiar",
+    fillPageButton: "Rellenar página",
+    tempEmailTitle: "Email temporal",
+    refreshInboxTitle: "Actualizar inbox",
+    emailLabel: "Email",
+    tempEmailPlaceholder: "Genera una casilla Mail.tm",
+    generateTempEmailButton: "Generar email temporal",
+    noTempEmailActive: "No hay email temporal activo.",
+    companyTitle: "Empresa fake",
+    generateCompanyTitle: "Generar empresa",
+    companyNameLabel: "Nombre de empresa",
+    cnpjLabel: "CNPJ",
+    cnpjLookupLabel: "CNPJ para consulta",
+    useExampleButton: "Usar ejemplo",
+    fetchAndFillButton: "Buscar y rellenar",
+    cepLabel: "CEP válido",
+    generateCepButton: "Generar CEP",
+    usToolsTitle: "Estados Unidos",
+    zipLabel: "ZIP Code",
+    generateZipButton: "Generar ZIP",
+    createdBy: "Creado por",
+    personGenerated: "Persona generada.",
+    companyGenerated: "Empresa fake generada.",
+    cepGenerated: "CEP válido cargado.",
+    zipGenerated: "ZIP Code generado.",
+    copied: "Copiado al portapapeles.",
+    tempEmailCreating: "Creando email temporal en Mail.tm...",
+    tempEmailCreated: "Email temporal creado.",
+    tempEmailCreateError: "No se pudo crear el email temporal.",
+    tempEmailRequired: "Genera un email temporal primero.",
+    tempEmailLoadError: "No se pudo cargar el email guardado.",
+    inboxUpdating: "Actualizando inbox...",
+    inboxUpdated: "{count} mensaje(s) encontrado(s).",
+    inboxUpdateError: "No se pudo actualizar la inbox.",
+    noMessages: "Aún no hay mensajes recibidos.",
+    noSubject: "(sin asunto)",
+    unknownSender: "remitente desconocido",
+    exampleCnpjLoaded: "CNPJ de ejemplo cargado.",
+    cnpjInvalid: "Ingresa un CNPJ con 14 dígitos.",
+    brasilApiLoading: "Consultando BrasilAPI...",
+    cnpjFilled: "CNPJ consultado y enviado a la página.",
+    cnpjError: "No se pudo consultar el CNPJ.",
+    cepInvalid: "Ingresa un CEP con 8 dígitos.",
+    viaCepLoading: "Consultando ViaCEP...",
+    cepNotFound: "CEP no encontrado en ViaCEP.",
+    addressFilled: "Dirección consultada y enviada a la página.",
+    cepError: "No se pudo consultar el CEP.",
+    noActiveTab: "No se encontró una pestaña activa.",
+    fieldsFilled: "{count} campo(s) rellenado(s).",
+    noCompatibleFields: "No se encontró ningún campo compatible en la página.",
+    reloadPage: "Recarga la página actual e inténtalo de nuevo.",
+    nameCopyLabel: "Nombre",
+    cpfCopyLabel: "CPF",
+    companyCopyLabel: "Empresa",
+    cnpjCopyLabel: "CNPJ"
+  }
+};
+
+let currentLanguage = "pt-BR";
+let currentDataLocale = "BR";
+
 const el = {
+  html: document.documentElement,
+  language: document.querySelector("#language"),
+  dataLocale: document.querySelector("#dataLocale"),
   firstName: document.querySelector("#firstName"),
   lastName: document.querySelector("#lastName"),
   fullName: document.querySelector("#fullName"),
@@ -34,10 +272,13 @@ const el = {
   lookupCnpj: document.querySelector("#lookupCnpj"),
   cnpjResult: document.querySelector("#cnpjResult"),
   cep: document.querySelector("#cep"),
+  usZip: document.querySelector("#usZip"),
   cepResult: document.querySelector("#cepResult"),
   status: document.querySelector("#status")
 };
 
+el.language.addEventListener("change", handleLanguageChange);
+el.dataLocale.addEventListener("change", handleDataLocaleChange);
 document.querySelector("#generatePerson").addEventListener("click", generatePerson);
 document.querySelector("#generateCompany").addEventListener("click", generateCompany);
 document.querySelector("#copyPerson").addEventListener("click", copyPerson);
@@ -50,17 +291,88 @@ document.querySelector("#refreshInbox").addEventListener("click", refreshInbox);
 document.querySelector("#fillCompany").addEventListener("click", () => fillActivePage("FILL_COMPANY", getFakeCompanyPayload()));
 document.querySelector("#useExampleCnpj").addEventListener("click", () => {
   el.lookupCnpj.value = "65347806000104";
-  setStatus("CNPJ de exemplo carregado para consulta.");
+  setStatus(t("exampleCnpjLoaded"));
 });
 document.querySelector("#fetchCnpj").addEventListener("click", fetchCnpj);
 document.querySelector("#generateCep").addEventListener("click", generateCep);
 document.querySelector("#fetchCep").addEventListener("click", fetchCep);
+document.querySelector("#generateUsZip").addEventListener("click", generateUsZip);
+document.querySelector("#fillUsZip").addEventListener("click", () => fillActivePage("FILL_ADDRESS", { cep: el.usZip.value, zip: el.usZip.value }));
 
-generatePerson();
-generateCompany();
-generateCep();
-el.lookupCnpj.value = "65347806000104";
-loadSavedTempEmail();
+init();
+
+async function init() {
+  await loadSettings();
+  applyI18n();
+  generatePerson();
+  generateCompany();
+  generateCep();
+  generateUsZip();
+  el.lookupCnpj.value = "65347806000104";
+  loadSavedTempEmail();
+}
+
+async function loadSettings() {
+  if (typeof chrome === "undefined" || !chrome.storage?.local) {
+    return;
+  }
+
+  const stored = await chrome.storage.local.get(SETTINGS_STORAGE_KEY).catch(() => ({}));
+  const settings = stored[SETTINGS_STORAGE_KEY] || {};
+  currentLanguage = translations[settings.language] ? settings.language : "pt-BR";
+  currentDataLocale = settings.dataLocale === "US" ? "US" : "BR";
+  el.language.value = currentLanguage;
+  el.dataLocale.value = currentDataLocale;
+}
+
+async function saveSettings() {
+  if (typeof chrome === "undefined" || !chrome.storage?.local) {
+    return;
+  }
+
+  await chrome.storage.local.set({
+    [SETTINGS_STORAGE_KEY]: {
+      language: currentLanguage,
+      dataLocale: currentDataLocale
+    }
+  }).catch(() => {});
+}
+
+function handleLanguageChange() {
+  currentLanguage = translations[el.language.value] ? el.language.value : "pt-BR";
+  applyI18n();
+  saveSettings();
+}
+
+function handleDataLocaleChange() {
+  currentDataLocale = el.dataLocale.value === "US" ? "US" : "BR";
+  generatePerson();
+  generateCompany();
+  saveSettings();
+}
+
+function t(key, params = {}) {
+  const template = translations[currentLanguage]?.[key] || translations["pt-BR"][key] || key;
+  return Object.entries(params).reduce((value, [param, replacement]) => {
+    return value.replaceAll(`{${param}}`, String(replacement));
+  }, template);
+}
+
+function applyI18n() {
+  el.html.lang = currentLanguage;
+
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    node.textContent = t(node.dataset.i18n);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+    node.setAttribute("placeholder", t(node.dataset.i18nPlaceholder));
+  });
+
+  document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+    node.setAttribute("title", t(node.dataset.i18nTitle));
+  });
+}
 
 function randomItem(list) {
   return list[Math.floor(Math.random() * list.length)];
@@ -91,6 +403,15 @@ function formatCep(value) {
   }
 
   return digits.replace(/(\d{5})(\d{3})/, "$1-$2");
+}
+
+function formatUsZip(value) {
+  const digits = onlyDigits(value);
+  if (digits.length <= 5) {
+    return digits.padStart(5, "0").slice(0, 5);
+  }
+
+  return `${digits.slice(0, 5)}-${digits.slice(5, 9)}`;
 }
 
 function createCpf() {
@@ -126,25 +447,36 @@ function createCnpjDigit(digits, weights) {
 }
 
 function generatePerson() {
-  const firstName = randomItem(firstNames);
-  const lastName = `${randomItem(lastNames)} ${randomItem(lastNames)}`;
+  const firstName = randomItem(currentDataLocale === "US" ? usFirstNames : firstNames);
+  const lastName = currentDataLocale === "US"
+    ? randomItem(usLastNames)
+    : `${randomItem(lastNames)} ${randomItem(lastNames)}`;
   el.firstName.value = firstName;
   el.lastName.value = lastName;
   el.fullName.value = `${firstName} ${lastName}`;
   el.cpf.value = formatCpf(createCpf());
-  setStatus("Pessoa gerada.");
+  setStatus(t("personGenerated"));
 }
 
 function generateCompany() {
-  const name = `${randomItem(lastNames)} ${randomItem(companySegments)} ${randomItem(companySuffixes)}`;
+  const name = currentDataLocale === "US"
+    ? `${randomItem(usLastNames)} ${randomItem(usCompanySegments)} ${randomItem(usCompanySuffixes)}`
+    : `${randomItem(lastNames)} ${randomItem(companySegments)} ${randomItem(companySuffixes)}`;
   el.companyName.value = name;
   el.cnpj.value = formatCnpj(createCnpj());
-  setStatus("Empresa fake gerada.");
+  setStatus(t("companyGenerated"));
 }
 
 function generateCep() {
   el.cep.value = randomItem(validCepSamples);
-  setStatus("CEP válido carregado.");
+  setStatus(t("cepGenerated"));
+}
+
+function generateUsZip() {
+  el.usZip.value = Math.random() > 0.2
+    ? randomItem(usZipSamples)
+    : formatUsZip(`${randomItem(usZipSamples)}${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`);
+  setStatus(t("zipGenerated"));
 }
 
 function getPersonPayload() {
@@ -168,34 +500,34 @@ function getFakeCompanyPayload() {
 
 async function copyPerson() {
   await copyText([
-    `Nome: ${el.fullName.value}`,
-    `CPF: ${el.cpf.value}`
+    `${t("nameCopyLabel")}: ${el.fullName.value}`,
+    `${t("cpfCopyLabel")}: ${el.cpf.value}`
   ].join("\n"));
 }
 
 async function copyCompany() {
   await copyText([
-    `Empresa: ${el.companyName.value}`,
-    `CNPJ: ${el.cnpj.value}`
+    `${t("companyCopyLabel")}: ${el.companyName.value}`,
+    `${t("cnpjCopyLabel")}: ${el.cnpj.value}`
   ].join("\n"));
 }
 
 async function copyText(text) {
   await navigator.clipboard.writeText(text);
-  setStatus("Copiado para a área de transferência.");
+  setStatus(t("copied"));
 }
 
 async function generateTempEmail() {
   setBusy(true);
-  setStatus("Criando email temporário no Mail.tm...");
+  setStatus(t("tempEmailCreating"));
 
   try {
     const account = await createTempMailAccount();
     el.tempEmail.value = account.address;
     await refreshInbox(account);
-    setStatus("Email temporário criado.");
+    setStatus(t("tempEmailCreated"));
   } catch (error) {
-    setStatus(error.message || "Não foi possível criar email temporário.", true);
+    setStatus(error.message || t("tempEmailCreateError"), true);
   } finally {
     setBusy(false);
   }
@@ -203,7 +535,7 @@ async function generateTempEmail() {
 
 async function copyTempEmail() {
   if (!el.tempEmail.value) {
-    setStatus("Gere um email temporário primeiro.", true);
+    setStatus(t("tempEmailRequired"), true);
     return;
   }
 
@@ -212,7 +544,7 @@ async function copyTempEmail() {
 
 async function fillTempEmail() {
   if (!el.tempEmail.value) {
-    setStatus("Gere um email temporário primeiro.", true);
+    setStatus(t("tempEmailRequired"), true);
     return;
   }
 
@@ -233,22 +565,22 @@ async function loadSavedTempEmail() {
     el.tempEmail.value = account.address;
     await refreshInbox(account, { silent: true });
   } catch (error) {
-    el.inboxList.textContent = "Não foi possível carregar o email salvo.";
+    el.inboxList.textContent = t("tempEmailLoadError");
   }
 }
 
 async function refreshInbox(account = null, options = {}) {
   if (!el.tempEmail.value && !account) {
-    el.inboxList.textContent = "Gere um email temporário primeiro.";
+    el.inboxList.textContent = t("tempEmailRequired");
     if (!options.silent) {
-      setStatus("Gere um email temporário primeiro.", true);
+      setStatus(t("tempEmailRequired"), true);
     }
     return;
   }
 
   setBusy(true);
   if (!options.silent) {
-    setStatus("Atualizando inbox...");
+    setStatus(t("inboxUpdating"));
   }
 
   try {
@@ -256,12 +588,12 @@ async function refreshInbox(account = null, options = {}) {
     el.tempEmail.value = result.account.address;
     renderInboxMessages(result.messages);
     if (!options.silent) {
-      setStatus(`${result.total} mensagem(ns) encontrada(s).`);
+      setStatus(t("inboxUpdated", { count: result.total }));
     }
   } catch (error) {
-    el.inboxList.textContent = "Não foi possível atualizar a inbox.";
+    el.inboxList.textContent = t("inboxUpdateError");
     if (!options.silent) {
-      setStatus(error.message || "Não foi possível atualizar a inbox.", true);
+      setStatus(error.message || t("inboxUpdateError"), true);
     }
   } finally {
     setBusy(false);
@@ -272,7 +604,7 @@ function renderInboxMessages(messages) {
   el.inboxList.textContent = "";
 
   if (!messages.length) {
-    el.inboxList.textContent = "Nenhuma mensagem recebida ainda.";
+    el.inboxList.textContent = t("noMessages");
     return;
   }
 
@@ -282,10 +614,10 @@ function renderInboxMessages(messages) {
     item.className = "message";
 
     const subject = document.createElement("strong");
-    subject.textContent = message.subject || "(sem assunto)";
+    subject.textContent = message.subject || t("noSubject");
 
     const meta = document.createElement("span");
-    meta.textContent = message.from?.address || "remetente desconhecido";
+    meta.textContent = message.from?.address || t("unknownSender");
 
     const intro = document.createElement("span");
     intro.textContent = message.intro || "";
@@ -300,12 +632,12 @@ function renderInboxMessages(messages) {
 async function fetchCnpj() {
   const cnpj = onlyDigits(el.lookupCnpj.value);
   if (cnpj.length !== 14) {
-    setStatus("Informe um CNPJ com 14 dígitos.", true);
+    setStatus(t("cnpjInvalid"), true);
     return;
   }
 
   setBusy(true);
-  setStatus("Consultando BrasilAPI...");
+  setStatus(t("brasilApiLoading"));
 
   try {
     const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`);
@@ -317,9 +649,9 @@ async function fetchCnpj() {
     const payload = normalizeBrasilApiCompany(data);
     el.cnpjResult.value = `${payload.legalName || payload.companyName} - ${payload.city || ""}/${payload.state || ""}`;
     await fillActivePage("FILL_COMPANY", payload);
-    setStatus("CNPJ consultado e enviado para a página.");
+    setStatus(t("cnpjFilled"));
   } catch (error) {
-    setStatus(error.message || "Não foi possível consultar o CNPJ.", true);
+    setStatus(error.message || t("cnpjError"), true);
   } finally {
     setBusy(false);
   }
@@ -328,12 +660,12 @@ async function fetchCnpj() {
 async function fetchCep() {
   const cep = onlyDigits(el.cep.value);
   if (cep.length !== 8) {
-    setStatus("Informe um CEP com 8 dígitos.", true);
+    setStatus(t("cepInvalid"), true);
     return;
   }
 
   setBusy(true);
-  setStatus("Consultando ViaCEP...");
+  setStatus(t("viaCepLoading"));
 
   try {
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -343,15 +675,15 @@ async function fetchCep() {
 
     const data = await response.json();
     if (data.erro) {
-      throw new Error("CEP não encontrado no ViaCEP.");
+      throw new Error(t("cepNotFound"));
     }
 
     const payload = normalizeViaCepAddress(data);
     el.cepResult.value = `${payload.street}, ${payload.neighborhood} - ${payload.city}/${payload.state}`;
     await fillActivePage("FILL_ADDRESS", payload);
-    setStatus("Endereço consultado e enviado para a página.");
+    setStatus(t("addressFilled"));
   } catch (error) {
-    setStatus(error.message || "Não foi possível consultar o CEP.", true);
+    setStatus(error.message || t("cepError"), true);
   } finally {
     setBusy(false);
   }
@@ -395,7 +727,7 @@ function normalizeViaCepAddress(data) {
 async function fillActivePage(type, payload) {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id) {
-    setStatus("Nenhuma aba ativa encontrada.", true);
+    setStatus(t("noActiveTab"), true);
     return;
   }
 
@@ -407,13 +739,13 @@ async function fillActivePage(type, payload) {
     }
 
     if (response?.filledCount > 0) {
-      setStatus(`${response.filledCount} campo(s) preenchido(s).`);
+      setStatus(t("fieldsFilled", { count: response.filledCount }));
       return;
     }
 
-    setStatus("Nenhum campo compatível foi encontrado na página.", true);
+    setStatus(t("noCompatibleFields"), true);
   } catch (error) {
-    setStatus("Recarregue a página atual e tente preencher novamente.", true);
+    setStatus(t("reloadPage"), true);
   }
 }
 

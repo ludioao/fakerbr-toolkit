@@ -3,6 +3,6 @@
     "message": "Faker BR"
   },
   "extensionDescription": {
-    "message": "Gera CPF, CNPJ, nomes, empresas, email temporário, ZIP Code dos EUA e preenche formulários com dados de teste."
+    "message": "Gera CPF, CNPJ, nomes, empresas, email temporário, endereço americano, ZIP Code dos EUA e preenche formulários."
   }
 }

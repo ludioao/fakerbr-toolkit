@@ -2,7 +2,7 @@
 
 Faker BR é uma extensão Manifest V3 para Google Chrome que gera dados brasileiros de teste e ajuda a preencher formulários durante desenvolvimento, QA, suporte e homologação.
 
-Ela gera CPF, CNPJ, nomes, empresas, email temporário, ZIP Code dos EUA, consulta CNPJ na BrasilAPI e busca endereço por CEP no ViaCEP.
+Ela gera CPF, CNPJ, nomes, empresas, email temporário, endereço americano fake, ZIP Code dos EUA, consulta CNPJ na BrasilAPI e busca endereço por CEP no ViaCEP.
 
 Criado por [Lúdio Oliveira](https://github.com/ludioao).
 
@@ -13,6 +13,7 @@ Criado por [Lúdio Oliveira](https://github.com/ludioao).
 - Gerar nome, sobrenome e nome completo.
 - Gerar nomes brasileiros ou americanos.
 - Gerar nome de empresa fake.
+- Gerar endereço americano fake.
 - Gerar ZIP Code dos Estados Unidos.
 - Gerar email temporário com Mail.tm.
 - Copiar dados gerados para a área de transferência.
@@ -47,6 +48,7 @@ O menu de contexto inclui:
 - Preencher este campo com CPF.
 - Preencher este campo com CNPJ.
 - Preencher este campo com ZIP Code.
+- Preencher endereço americano fake.
 - Preencher este campo com email temporário.
 - Consultar CNPJ selecionado e preencher.
 - Consultar CEP selecionado e preencher endereço.
@@ -132,7 +134,7 @@ Não é necessário incluir `README.md` no pacote da loja, mas ele pode ficar no
 Descrição curta:
 
 ```text
-Gere CPF, CNPJ, nomes, empresas, email temporário, ZIP Code dos EUA e preencha formulários com dados de teste.
+Gere CPF, CNPJ, nomes, empresas, email temporário, endereço americano, ZIP Code dos EUA e preencha formulários.
 ```
 
 Descrição completa:
@@ -140,7 +142,7 @@ Descrição completa:
 ```text
 Faker BR ajuda desenvolvedores, testers e equipes de suporte a preencher formulários com dados brasileiros e internacionais de teste.
 
-Com a extensão, você pode gerar CPF, CNPJ, nome completo, nome de empresa, email temporário, nomes americanos e ZIP Code dos Estados Unidos. Também é possível consultar dados reais de CNPJ pela BrasilAPI e preencher endereço a partir de um CEP válido usando ViaCEP.
+Com a extensão, você pode gerar CPF, CNPJ, nome completo, nome de empresa, email temporário, nomes americanos, endereço americano fake e ZIP Code dos Estados Unidos. Também é possível consultar dados reais de CNPJ pela BrasilAPI e preencher endereço a partir de um CEP válido usando ViaCEP.
 
 A interface está disponível em Português, Inglês e Espanhol.
 

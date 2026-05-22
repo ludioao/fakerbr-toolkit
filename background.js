@@ -42,6 +42,30 @@ const usZipSamples = [
   "90001", "94105", "98101", "02108", "85001", "97201", "15201"
 ];
 
+const usStreetNames = [
+  "Main", "Oak", "Pine", "Maple", "Cedar", "Elm", "Washington", "Lake",
+  "Hill", "Park", "Sunset", "River", "Lincoln", "Madison", "Franklin"
+];
+
+const usStreetTypes = ["St", "Ave", "Blvd", "Rd", "Ln", "Dr", "Way", "Ct"];
+
+const usAddressLocations = [
+  { city: "New York", state: "NY", zip: "10001" },
+  { city: "Brooklyn", state: "NY", zip: "11201" },
+  { city: "Washington", state: "DC", zip: "20001" },
+  { city: "Atlanta", state: "GA", zip: "30301" },
+  { city: "Miami", state: "FL", zip: "33101" },
+  { city: "Chicago", state: "IL", zip: "60601" },
+  { city: "Austin", state: "TX", zip: "73301" },
+  { city: "Denver", state: "CO", zip: "80202" },
+  { city: "Los Angeles", state: "CA", zip: "90001" },
+  { city: "San Francisco", state: "CA", zip: "94105" },
+  { city: "Seattle", state: "WA", zip: "98101" },
+  { city: "Boston", state: "MA", zip: "02108" },
+  { city: "Phoenix", state: "AZ", zip: "85001" },
+  { city: "Portland", state: "OR", zip: "97201" }
+];
+
 const SETTINGS_STORAGE_KEY = "fakerBrSettings";
 
 const contextMenuTranslations = {
@@ -51,6 +75,7 @@ const contextMenuTranslations = {
     fillCpf: "Preencher este campo com CPF",
     fillCnpj: "Preencher este campo com CNPJ",
     fillZip: "Preencher este campo com ZIP Code",
+    fillUsAddress: "Preencher endereço americano fake",
     fillEmail: "Preencher este campo com email temporario",
     lookupCnpj: "Consultar CNPJ selecionado e preencher",
     lookupCep: "Consultar CEP selecionado e preencher endereco"
@@ -61,6 +86,7 @@ const contextMenuTranslations = {
     fillCpf: "Fill this field with CPF",
     fillCnpj: "Fill this field with CNPJ",
     fillZip: "Fill this field with ZIP Code",
+    fillUsAddress: "Fill fake US address",
     fillEmail: "Fill this field with temporary email",
     lookupCnpj: "Look up selected CNPJ and fill",
     lookupCep: "Look up selected CEP and fill address"
@@ -71,6 +97,7 @@ const contextMenuTranslations = {
     fillCpf: "Rellenar este campo con CPF",
     fillCnpj: "Rellenar este campo con CNPJ",
     fillZip: "Rellenar este campo con ZIP Code",
+    fillUsAddress: "Rellenar dirección americana fake",
     fillEmail: "Rellenar este campo con email temporal",
     lookupCnpj: "Consultar CNPJ seleccionado y rellenar",
     lookupCep: "Consultar CEP seleccionado y rellenar direccion"
@@ -113,6 +140,11 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
     if (info.menuItemId === "faker-fill-field-zip") {
       await fillActiveTab(tab.id, "FILL_CONTEXT_FIELD", { value: createUsZip() });
+      return;
+    }
+
+    if (info.menuItemId === "faker-fill-us-address") {
+      await fillActiveTab(tab.id, "FILL_ADDRESS", createUsAddress());
       return;
     }
 
@@ -191,6 +223,13 @@ async function createContextMenus() {
       parentId: "faker-root",
       title: copy.fillZip,
       contexts: ["editable"]
+    });
+
+    chrome.contextMenus.create({
+      id: "faker-fill-us-address",
+      parentId: "faker-root",
+      title: copy.fillUsAddress,
+      contexts: ["page", "editable"]
     });
 
     chrome.contextMenus.create({
@@ -334,6 +373,20 @@ function createUsZip() {
   }
 
   return `${randomItem(usZipSamples)}-${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`;
+}
+
+function createUsAddress() {
+  const location = randomItem(usAddressLocations);
+  const zip = Math.random() > 0.25 ? location.zip : createUsZip();
+
+  return {
+    number: String(Math.floor(Math.random() * 8999) + 100),
+    street: `${randomItem(usStreetNames)} ${randomItem(usStreetTypes)}`,
+    city: location.city,
+    state: location.state,
+    cep: zip,
+    zip
+  };
 }
 
 function normalizeBrasilApiCompany(data) {

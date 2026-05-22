@@ -122,10 +122,10 @@
         <h2>BrasilAPI CNPJ</h2>
         <label>
           <span data-i18n="cnpjLookupLabel">CNPJ para consulta</span>
-          <input id="lookupCnpj" type="text" inputmode="numeric" placeholder="65347806000104" autocomplete="off">
+          <input id="lookupCnpj" type="text" inputmode="numeric" placeholder="CNPJ aleatório" data-i18n-placeholder="randomCnpjPlaceholder" autocomplete="off">
         </label>
         <div class="actions">
-          <button id="useExampleCnpj" class="secondary" type="button" data-i18n="useExampleButton">Usar exemplo</button>
+          <button id="useExampleCnpj" class="secondary" type="button" data-i18n="useExampleButton">Usar randômico</button>
           <button id="fetchCnpj" type="button" data-i18n="fetchAndFillButton">Buscar e preencher</button>
         </div>
         <output id="cnpjResult" class="result"></output>
@@ -146,13 +146,37 @@
 
       <section class="panel">
         <h2 data-i18n="usToolsTitle">Estados Unidos</h2>
+        <div class="section-title">
+          <h2 data-i18n="usAddressTitle">Endereço americano</h2>
+          <button id="generateUsAddress" class="icon-button" type="button" title="Gerar endereço americano" data-i18n-title="generateUsAddressTitle">↻</button>
+        </div>
+        <div class="grid">
+          <label>
+            <span data-i18n="streetLabel">Rua</span>
+            <input id="usStreet" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span data-i18n="numberLabel">Número</span>
+            <input id="usNumber" type="text" inputmode="numeric" autocomplete="off">
+          </label>
+        </div>
+        <div class="grid">
+          <label>
+            <span data-i18n="cityLabel">Cidade</span>
+            <input id="usCity" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span data-i18n="stateLabel">Estado</span>
+            <input id="usState" type="text" autocomplete="off">
+          </label>
+        </div>
         <label>
           <span data-i18n="zipLabel">ZIP Code</span>
           <input id="usZip" type="text" inputmode="numeric" placeholder="10001" autocomplete="off">
         </label>
         <div class="actions">
-          <button id="generateUsZip" class="secondary" type="button" data-i18n="generateZipButton">Gerar ZIP</button>
-          <button id="fillUsZip" type="button" data-i18n="fillPageButton">Preencher página</button>
+          <button id="copyUsAddress" class="secondary" type="button" data-i18n="copyButton">Copiar</button>
+          <button id="fillUsAddress" type="button" data-i18n="fillPageButton">Preencher página</button>
         </div>
       </section>
 

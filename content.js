@@ -74,6 +74,13 @@ const fieldMatchers = {
     /\bcodigo.?postal\b/i,
     /\bcódigo.?postal\b/i
   ],
+  zip: [
+    /\bzip\b/i,
+    /\bzip.?code\b/i,
+    /\bpostal.?code\b/i,
+    /\bcodigo.?postal\b/i,
+    /\bcódigo.?postal\b/i
+  ],
   street: [
     /\blogradouro\b/i,
     /\bendereco\b/i,

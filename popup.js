@@ -45,6 +45,30 @@ const usZipSamples = [
   "90001", "94105", "98101", "02108", "85001", "97201", "15201"
 ];
 
+const usStreetNames = [
+  "Main", "Oak", "Pine", "Maple", "Cedar", "Elm", "Washington", "Lake",
+  "Hill", "Park", "Sunset", "River", "Lincoln", "Madison", "Franklin"
+];
+
+const usStreetTypes = ["St", "Ave", "Blvd", "Rd", "Ln", "Dr", "Way", "Ct"];
+
+const usAddressLocations = [
+  { city: "New York", state: "NY", zip: "10001" },
+  { city: "Brooklyn", state: "NY", zip: "11201" },
+  { city: "Washington", state: "DC", zip: "20001" },
+  { city: "Atlanta", state: "GA", zip: "30301" },
+  { city: "Miami", state: "FL", zip: "33101" },
+  { city: "Chicago", state: "IL", zip: "60601" },
+  { city: "Austin", state: "TX", zip: "73301" },
+  { city: "Denver", state: "CO", zip: "80202" },
+  { city: "Los Angeles", state: "CA", zip: "90001" },
+  { city: "San Francisco", state: "CA", zip: "94105" },
+  { city: "Seattle", state: "WA", zip: "98101" },
+  { city: "Boston", state: "MA", zip: "02108" },
+  { city: "Phoenix", state: "AZ", zip: "85001" },
+  { city: "Portland", state: "OR", zip: "97201" }
+];
+
 const SETTINGS_STORAGE_KEY = "fakerBrSettings";
 
 const translations = {
@@ -73,11 +97,18 @@ const translations = {
     companyNameLabel: "Nome da empresa",
     cnpjLabel: "CNPJ",
     cnpjLookupLabel: "CNPJ para consulta",
-    useExampleButton: "Usar exemplo",
+    randomCnpjPlaceholder: "CNPJ aleatório",
+    useExampleButton: "Usar randômico",
     fetchAndFillButton: "Buscar e preencher",
     cepLabel: "CEP válido",
     generateCepButton: "Gerar CEP",
     usToolsTitle: "Estados Unidos",
+    usAddressTitle: "Endereço americano",
+    generateUsAddressTitle: "Gerar endereço americano",
+    streetLabel: "Rua",
+    numberLabel: "Número",
+    cityLabel: "Cidade",
+    stateLabel: "Estado",
     zipLabel: "ZIP Code",
     generateZipButton: "Gerar ZIP",
     createdBy: "Criado por",
@@ -85,6 +116,7 @@ const translations = {
     companyGenerated: "Empresa fake gerada.",
     cepGenerated: "CEP válido carregado.",
     zipGenerated: "ZIP Code gerado.",
+    usAddressGenerated: "Endereço americano gerado.",
     copied: "Copiado para a área de transferência.",
     tempEmailCreating: "Criando email temporário no Mail.tm...",
     tempEmailCreated: "Email temporário criado.",
@@ -97,7 +129,7 @@ const translations = {
     noMessages: "Nenhuma mensagem recebida ainda.",
     noSubject: "(sem assunto)",
     unknownSender: "remetente desconhecido",
-    exampleCnpjLoaded: "CNPJ de exemplo carregado para consulta.",
+    exampleCnpjLoaded: "CNPJ randômico carregado para consulta.",
     cnpjInvalid: "Informe um CNPJ com 14 dígitos.",
     brasilApiLoading: "Consultando BrasilAPI...",
     cnpjFilled: "CNPJ consultado e enviado para a página.",
@@ -114,7 +146,11 @@ const translations = {
     nameCopyLabel: "Nome",
     cpfCopyLabel: "CPF",
     companyCopyLabel: "Empresa",
-    cnpjCopyLabel: "CNPJ"
+    cnpjCopyLabel: "CNPJ",
+    addressCopyLabel: "Endereço",
+    cityCopyLabel: "Cidade",
+    stateCopyLabel: "Estado",
+    zipCopyLabel: "ZIP Code"
   },
   en: {
     tagline: "Brazilian and international test data, fast.",
@@ -141,11 +177,18 @@ const translations = {
     companyNameLabel: "Company name",
     cnpjLabel: "CNPJ",
     cnpjLookupLabel: "CNPJ lookup",
-    useExampleButton: "Use example",
+    randomCnpjPlaceholder: "Random CNPJ",
+    useExampleButton: "Use random",
     fetchAndFillButton: "Fetch and fill",
     cepLabel: "Valid CEP",
     generateCepButton: "Generate CEP",
     usToolsTitle: "United States",
+    usAddressTitle: "US address",
+    generateUsAddressTitle: "Generate US address",
+    streetLabel: "Street",
+    numberLabel: "Number",
+    cityLabel: "City",
+    stateLabel: "State",
     zipLabel: "ZIP Code",
     generateZipButton: "Generate ZIP",
     createdBy: "Created by",
@@ -153,6 +196,7 @@ const translations = {
     companyGenerated: "Fake company generated.",
     cepGenerated: "Valid CEP loaded.",
     zipGenerated: "ZIP Code generated.",
+    usAddressGenerated: "US address generated.",
     copied: "Copied to clipboard.",
     tempEmailCreating: "Creating temporary email on Mail.tm...",
     tempEmailCreated: "Temporary email created.",
@@ -165,7 +209,7 @@ const translations = {
     noMessages: "No messages received yet.",
     noSubject: "(no subject)",
     unknownSender: "unknown sender",
-    exampleCnpjLoaded: "Example CNPJ loaded.",
+    exampleCnpjLoaded: "Random CNPJ loaded.",
     cnpjInvalid: "Enter a CNPJ with 14 digits.",
     brasilApiLoading: "Checking BrasilAPI...",
     cnpjFilled: "CNPJ fetched and sent to the page.",
@@ -182,7 +226,11 @@ const translations = {
     nameCopyLabel: "Name",
     cpfCopyLabel: "CPF",
     companyCopyLabel: "Company",
-    cnpjCopyLabel: "CNPJ"
+    cnpjCopyLabel: "CNPJ",
+    addressCopyLabel: "Address",
+    cityCopyLabel: "City",
+    stateCopyLabel: "State",
+    zipCopyLabel: "ZIP Code"
   },
   es: {
     tagline: "Datos brasileños e internacionales para pruebas rápidas.",
@@ -209,11 +257,18 @@ const translations = {
     companyNameLabel: "Nombre de empresa",
     cnpjLabel: "CNPJ",
     cnpjLookupLabel: "CNPJ para consulta",
-    useExampleButton: "Usar ejemplo",
+    randomCnpjPlaceholder: "CNPJ aleatorio",
+    useExampleButton: "Usar aleatorio",
     fetchAndFillButton: "Buscar y rellenar",
     cepLabel: "CEP válido",
     generateCepButton: "Generar CEP",
     usToolsTitle: "Estados Unidos",
+    usAddressTitle: "Dirección americana",
+    generateUsAddressTitle: "Generar dirección americana",
+    streetLabel: "Calle",
+    numberLabel: "Número",
+    cityLabel: "Ciudad",
+    stateLabel: "Estado",
     zipLabel: "ZIP Code",
     generateZipButton: "Generar ZIP",
     createdBy: "Creado por",
@@ -221,6 +276,7 @@ const translations = {
     companyGenerated: "Empresa fake generada.",
     cepGenerated: "CEP válido cargado.",
     zipGenerated: "ZIP Code generado.",
+    usAddressGenerated: "Dirección americana generada.",
     copied: "Copiado al portapapeles.",
     tempEmailCreating: "Creando email temporal en Mail.tm...",
     tempEmailCreated: "Email temporal creado.",
@@ -233,7 +289,7 @@ const translations = {
     noMessages: "Aún no hay mensajes recibidos.",
     noSubject: "(sin asunto)",
     unknownSender: "remitente desconocido",
-    exampleCnpjLoaded: "CNPJ de ejemplo cargado.",
+    exampleCnpjLoaded: "CNPJ aleatorio cargado.",
     cnpjInvalid: "Ingresa un CNPJ con 14 dígitos.",
     brasilApiLoading: "Consultando BrasilAPI...",
     cnpjFilled: "CNPJ consultado y enviado a la página.",
@@ -250,7 +306,11 @@ const translations = {
     nameCopyLabel: "Nombre",
     cpfCopyLabel: "CPF",
     companyCopyLabel: "Empresa",
-    cnpjCopyLabel: "CNPJ"
+    cnpjCopyLabel: "CNPJ",
+    addressCopyLabel: "Dirección",
+    cityCopyLabel: "Ciudad",
+    stateCopyLabel: "Estado",
+    zipCopyLabel: "ZIP Code"
   }
 };
 
@@ -272,34 +332,46 @@ const el = {
   lookupCnpj: document.querySelector("#lookupCnpj"),
   cnpjResult: document.querySelector("#cnpjResult"),
   cep: document.querySelector("#cep"),
+  usStreet: document.querySelector("#usStreet"),
+  usNumber: document.querySelector("#usNumber"),
+  usCity: document.querySelector("#usCity"),
+  usState: document.querySelector("#usState"),
   usZip: document.querySelector("#usZip"),
   cepResult: document.querySelector("#cepResult"),
   status: document.querySelector("#status")
 };
 
-el.language.addEventListener("change", handleLanguageChange);
-el.dataLocale.addEventListener("change", handleDataLocaleChange);
-document.querySelector("#generatePerson").addEventListener("click", generatePerson);
-document.querySelector("#generateCompany").addEventListener("click", generateCompany);
-document.querySelector("#copyPerson").addEventListener("click", copyPerson);
-document.querySelector("#copyCompany").addEventListener("click", copyCompany);
-document.querySelector("#fillPerson").addEventListener("click", () => fillActivePage("FILL_PERSON", getPersonPayload()));
-document.querySelector("#generateTempEmail").addEventListener("click", generateTempEmail);
-document.querySelector("#copyTempEmail").addEventListener("click", copyTempEmail);
-document.querySelector("#fillTempEmail").addEventListener("click", fillTempEmail);
-document.querySelector("#refreshInbox").addEventListener("click", refreshInbox);
-document.querySelector("#fillCompany").addEventListener("click", () => fillActivePage("FILL_COMPANY", getFakeCompanyPayload()));
-document.querySelector("#useExampleCnpj").addEventListener("click", () => {
-  el.lookupCnpj.value = "65347806000104";
+bind(el.language, "change", handleLanguageChange);
+bind(el.dataLocale, "change", handleDataLocaleChange);
+bind("#generatePerson", "click", generatePerson);
+bind("#generateCompany", "click", generateCompany);
+bind("#copyPerson", "click", copyPerson);
+bind("#copyCompany", "click", copyCompany);
+bind("#fillPerson", "click", () => fillActivePage("FILL_PERSON", getPersonPayload()));
+bind("#generateTempEmail", "click", generateTempEmail);
+bind("#copyTempEmail", "click", copyTempEmail);
+bind("#fillTempEmail", "click", fillTempEmail);
+bind("#refreshInbox", "click", refreshInbox);
+bind("#fillCompany", "click", () => fillActivePage("FILL_COMPANY", getFakeCompanyPayload()));
+bind("#useExampleCnpj", "click", () => {
+  el.lookupCnpj.value = createCnpj();
   setStatus(t("exampleCnpjLoaded"));
 });
-document.querySelector("#fetchCnpj").addEventListener("click", fetchCnpj);
-document.querySelector("#generateCep").addEventListener("click", generateCep);
-document.querySelector("#fetchCep").addEventListener("click", fetchCep);
-document.querySelector("#generateUsZip").addEventListener("click", generateUsZip);
-document.querySelector("#fillUsZip").addEventListener("click", () => fillActivePage("FILL_ADDRESS", { cep: el.usZip.value, zip: el.usZip.value }));
+bind("#fetchCnpj", "click", fetchCnpj);
+bind("#generateCep", "click", generateCep);
+bind("#fetchCep", "click", fetchCep);
+bind("#generateUsAddress", "click", generateUsAddress);
+bind("#copyUsAddress", "click", copyUsAddress);
+bind("#fillUsAddress", "click", () => fillActivePage("FILL_ADDRESS", getUsAddressPayload()));
 
 init();
+
+function bind(target, eventName, handler) {
+  const element = typeof target === "string" ? document.querySelector(target) : target;
+  if (element) {
+    element.addEventListener(eventName, handler);
+  }
+}
 
 async function init() {
   await loadSettings();
@@ -307,8 +379,8 @@ async function init() {
   generatePerson();
   generateCompany();
   generateCep();
-  generateUsZip();
-  el.lookupCnpj.value = "65347806000104";
+  generateUsAddress();
+  el.lookupCnpj.value = createCnpj();
   loadSavedTempEmail();
 }
 
@@ -473,10 +545,30 @@ function generateCep() {
 }
 
 function generateUsZip() {
-  el.usZip.value = Math.random() > 0.2
+  return Math.random() > 0.2
     ? randomItem(usZipSamples)
     : formatUsZip(`${randomItem(usZipSamples)}${String(Math.floor(Math.random() * 10000)).padStart(4, "0")}`);
-  setStatus(t("zipGenerated"));
+}
+
+function createUsAddress() {
+  const location = randomItem(usAddressLocations);
+  return {
+    number: String(Math.floor(Math.random() * 8999) + 100),
+    street: `${randomItem(usStreetNames)} ${randomItem(usStreetTypes)}`,
+    city: location.city,
+    state: location.state,
+    cep: Math.random() > 0.25 ? location.zip : generateUsZip()
+  };
+}
+
+function generateUsAddress() {
+  const address = createUsAddress();
+  el.usNumber.value = address.number;
+  el.usStreet.value = address.street;
+  el.usCity.value = address.city;
+  el.usState.value = address.state;
+  el.usZip.value = address.cep;
+  setStatus(t("usAddressGenerated"));
 }
 
 function getPersonPayload() {
@@ -498,6 +590,17 @@ function getFakeCompanyPayload() {
   };
 }
 
+function getUsAddressPayload() {
+  return {
+    number: el.usNumber.value,
+    street: el.usStreet.value,
+    city: el.usCity.value,
+    state: el.usState.value,
+    cep: el.usZip.value,
+    zip: el.usZip.value
+  };
+}
+
 async function copyPerson() {
   await copyText([
     `${t("nameCopyLabel")}: ${el.fullName.value}`,
@@ -509,6 +612,15 @@ async function copyCompany() {
   await copyText([
     `${t("companyCopyLabel")}: ${el.companyName.value}`,
     `${t("cnpjCopyLabel")}: ${el.cnpj.value}`
+  ].join("\n"));
+}
+
+async function copyUsAddress() {
+  await copyText([
+    `${t("addressCopyLabel")}: ${el.usNumber.value} ${el.usStreet.value}`,
+    `${t("cityCopyLabel")}: ${el.usCity.value}`,
+    `${t("stateCopyLabel")}: ${el.usState.value}`,
+    `${t("zipCopyLabel")}: ${el.usZip.value}`
   ].join("\n"));
 }
 

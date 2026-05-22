@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Faker BR</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div>
+          <h1>Faker BR</h1>
+          <p>Dados brasileiros para testes rápidos.</p>
+        </div>
+        <span class="badge">MV3</span>
+      </header>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>Pessoa</h2>
+          <button id="generatePerson" class="icon-button" type="button" title="Gerar pessoa">↻</button>
+        </div>
+
+        <div class="grid">
+          <label>
+            Nome
+            <input id="firstName" type="text" autocomplete="off">
+          </label>
+          <label>
+            Sobrenome
+            <input id="lastName" type="text" autocomplete="off">
+          </label>
+        </div>
+
+        <label>
+          Nome completo
+          <input id="fullName" type="text" autocomplete="off">
+        </label>
+
+        <label>
+          CPF
+          <input id="cpf" type="text" autocomplete="off">
+        </label>
+
+        <div class="actions">
+          <button id="copyPerson" class="secondary" type="button">Copiar</button>
+          <button id="fillPerson" type="button">Preencher página</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>Empresa fake</h2>
+          <button id="generateCompany" class="icon-button" type="button" title="Gerar empresa">↻</button>
+        </div>
+
+        <label>
+          Nome da empresa
+          <input id="companyName" type="text" autocomplete="off">
+        </label>
+
+        <label>
+          CNPJ
+          <input id="cnpj" type="text" autocomplete="off">
+        </label>
+
+        <div class="actions">
+          <button id="copyCompany" class="secondary" type="button">Copiar</button>
+          <button id="fillCompany" type="button">Preencher página</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>BrasilAPI CNPJ</h2>
+        <label>
+          CNPJ para consulta
+          <input id="lookupCnpj" type="text" inputmode="numeric" placeholder="65347806000104" autocomplete="off">
+        </label>
+        <div class="actions">
+          <button id="useExampleCnpj" class="secondary" type="button">Usar exemplo</button>
+          <button id="fetchCnpj" type="button">Buscar e preencher</button>
+        </div>
+        <output id="cnpjResult" class="result"></output>
+      </section>
+
+      <section class="panel">
+        <h2>ViaCEP</h2>
+        <label>
+          CEP válido
+          <input id="cep" type="text" inputmode="numeric" placeholder="01001000" autocomplete="off">
+        </label>
+        <div class="actions">
+          <button id="generateCep" class="secondary" type="button">Gerar CEP</button>
+          <button id="fetchCep" type="button">Buscar e preencher</button>
+        </div>
+        <output id="cepResult" class="result"></output>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

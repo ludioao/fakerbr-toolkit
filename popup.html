@@ -51,6 +51,33 @@
 
       <section class="panel">
         <div class="section-title">
+          <h2>Email temporário</h2>
+          <button id="refreshInbox" class="icon-button" type="button" title="Atualizar inbox">↻</button>
+        </div>
+
+        <label>
+          Email
+          <input id="tempEmail" type="email" autocomplete="off" readonly placeholder="Gere uma caixa Mail.tm">
+        </label>
+
+        <div class="actions">
+          <button id="copyTempEmail" class="secondary" type="button">Copiar</button>
+          <button id="fillTempEmail" type="button">Preencher página</button>
+        </div>
+
+        <button id="generateTempEmail" type="button">Gerar email temporário</button>
+
+        <div class="inbox">
+          <div class="inbox-header">
+            <span>Inbox</span>
+            <a href="https://mail.tm" target="_blank" rel="noreferrer">Mail.tm</a>
+          </div>
+          <div id="inboxList" class="inbox-list">Nenhum email temporário ativo.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
           <h2>Empresa fake</h2>
           <button id="generateCompany" class="icon-button" type="button" title="Gerar empresa">↻</button>
         </div>
@@ -98,8 +125,14 @@
       </section>
 
       <p id="status" class="status" role="status" aria-live="polite"></p>
+
+      <footer class="footer">
+        Criado por <strong>Lúdio Oliveira</strong>
+        <a href="https://github.com/ludioao" target="_blank" rel="noreferrer">github.com/ludioao</a>
+      </footer>
     </main>
 
+    <script src="temp-mail.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

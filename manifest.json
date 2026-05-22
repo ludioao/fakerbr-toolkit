@@ -23,12 +23,14 @@
     "activeTab",
     "clipboardWrite",
     "contextMenus",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "host_permissions": [
+    "https://api.mail.tm/*",
     "https://brasilapi.com.br/*",
     "https://viacep.com.br/*"
   ],

@@ -27,6 +27,8 @@ const el = {
   lastName: document.querySelector("#lastName"),
   fullName: document.querySelector("#fullName"),
   cpf: document.querySelector("#cpf"),
+  tempEmail: document.querySelector("#tempEmail"),
+  inboxList: document.querySelector("#inboxList"),
   companyName: document.querySelector("#companyName"),
   cnpj: document.querySelector("#cnpj"),
   lookupCnpj: document.querySelector("#lookupCnpj"),
@@ -41,6 +43,10 @@ document.querySelector("#generateCompany").addEventListener("click", generateCom
 document.querySelector("#copyPerson").addEventListener("click", copyPerson);
 document.querySelector("#copyCompany").addEventListener("click", copyCompany);
 document.querySelector("#fillPerson").addEventListener("click", () => fillActivePage("FILL_PERSON", getPersonPayload()));
+document.querySelector("#generateTempEmail").addEventListener("click", generateTempEmail);
+document.querySelector("#copyTempEmail").addEventListener("click", copyTempEmail);
+document.querySelector("#fillTempEmail").addEventListener("click", fillTempEmail);
+document.querySelector("#refreshInbox").addEventListener("click", refreshInbox);
 document.querySelector("#fillCompany").addEventListener("click", () => fillActivePage("FILL_COMPANY", getFakeCompanyPayload()));
 document.querySelector("#useExampleCnpj").addEventListener("click", () => {
   el.lookupCnpj.value = "65347806000104";
@@ -54,6 +60,7 @@ generatePerson();
 generateCompany();
 generateCep();
 el.lookupCnpj.value = "65347806000104";
+loadSavedTempEmail();
 
 function randomItem(list) {
   return list[Math.floor(Math.random() * list.length)];
@@ -145,7 +152,8 @@ function getPersonPayload() {
     firstName: el.firstName.value,
     lastName: el.lastName.value,
     fullName: el.fullName.value,
-    cpf: el.cpf.value
+    cpf: el.cpf.value,
+    email: el.tempEmail.value
   };
 }
 
@@ -175,6 +183,118 @@ async function copyCompany() {
 async function copyText(text) {
   await navigator.clipboard.writeText(text);
   setStatus("Copiado para a área de transferência.");
+}
+
+async function generateTempEmail() {
+  setBusy(true);
+  setStatus("Criando email temporário no Mail.tm...");
+
+  try {
+    const account = await createTempMailAccount();
+    el.tempEmail.value = account.address;
+    await refreshInbox(account);
+    setStatus("Email temporário criado.");
+  } catch (error) {
+    setStatus(error.message || "Não foi possível criar email temporário.", true);
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function copyTempEmail() {
+  if (!el.tempEmail.value) {
+    setStatus("Gere um email temporário primeiro.", true);
+    return;
+  }
+
+  await copyText(el.tempEmail.value);
+}
+
+async function fillTempEmail() {
+  if (!el.tempEmail.value) {
+    setStatus("Gere um email temporário primeiro.", true);
+    return;
+  }
+
+  await fillActivePage("FILL_PERSON", { email: el.tempEmail.value });
+}
+
+async function loadSavedTempEmail() {
+  if (typeof chrome === "undefined" || !chrome.storage?.local) {
+    return;
+  }
+
+  try {
+    const account = await getSavedTempMailAccount();
+    if (!account?.address) {
+      return;
+    }
+
+    el.tempEmail.value = account.address;
+    await refreshInbox(account, { silent: true });
+  } catch (error) {
+    el.inboxList.textContent = "Não foi possível carregar o email salvo.";
+  }
+}
+
+async function refreshInbox(account = null, options = {}) {
+  if (!el.tempEmail.value && !account) {
+    el.inboxList.textContent = "Gere um email temporário primeiro.";
+    if (!options.silent) {
+      setStatus("Gere um email temporário primeiro.", true);
+    }
+    return;
+  }
+
+  setBusy(true);
+  if (!options.silent) {
+    setStatus("Atualizando inbox...");
+  }
+
+  try {
+    const result = await listTempMailMessages(account);
+    el.tempEmail.value = result.account.address;
+    renderInboxMessages(result.messages);
+    if (!options.silent) {
+      setStatus(`${result.total} mensagem(ns) encontrada(s).`);
+    }
+  } catch (error) {
+    el.inboxList.textContent = "Não foi possível atualizar a inbox.";
+    if (!options.silent) {
+      setStatus(error.message || "Não foi possível atualizar a inbox.", true);
+    }
+  } finally {
+    setBusy(false);
+  }
+}
+
+function renderInboxMessages(messages) {
+  el.inboxList.textContent = "";
+
+  if (!messages.length) {
+    el.inboxList.textContent = "Nenhuma mensagem recebida ainda.";
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  messages.forEach((message) => {
+    const item = document.createElement("article");
+    item.className = "message";
+
+    const subject = document.createElement("strong");
+    subject.textContent = message.subject || "(sem assunto)";
+
+    const meta = document.createElement("span");
+    meta.textContent = message.from?.address || "remetente desconhecido";
+
+    const intro = document.createElement("span");
+    intro.textContent = message.intro || "";
+
+    item.append(subject, meta, intro);
+    fragment.append(item);
+  });
+
+  el.inboxList.append(fragment);
 }
 
 async function fetchCnpj() {

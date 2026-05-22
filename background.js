@@ -1,3 +1,5 @@
+importScripts("temp-mail.js");
+
 const firstNames = [
   "Ana", "Beatriz", "Camila", "Fernanda", "Juliana", "Larissa", "Mariana", "Patricia",
   "Rafaela", "Sofia", "Bruno", "Caio", "Diego", "Eduardo", "Felipe", "Gabriel",
@@ -43,6 +45,12 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
     if (info.menuItemId === "faker-fill-field-cnpj") {
       await fillActiveTab(tab.id, "FILL_CONTEXT_FIELD", { value: formatCnpj(createCnpj()) });
+      return;
+    }
+
+    if (info.menuItemId === "faker-fill-field-email") {
+      const account = await ensureTempMailAccount();
+      await fillActiveTab(tab.id, "FILL_CONTEXT_FIELD", { value: account.address });
       return;
     }
 
@@ -104,6 +112,13 @@ function createContextMenus() {
       id: "faker-fill-field-cnpj",
       parentId: "faker-root",
       title: "Preencher este campo com CNPJ",
+      contexts: ["editable"]
+    });
+
+    chrome.contextMenus.create({
+      id: "faker-fill-field-email",
+      parentId: "faker-root",
+      title: "Preencher este campo com email temporario",
       contexts: ["editable"]
     });
 
